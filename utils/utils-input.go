@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gocarina/gocsv"
@@ -119,6 +120,9 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 					srv.Logger.Printf("add stock position %s with values %+v", pos.Name, pos)
 				}
 			}
+		default:
+			return []structs.Position{}, fmt.Errorf(constants.ErrorMsgUnknownPositionCategory)
+
 		}
 	}
 
