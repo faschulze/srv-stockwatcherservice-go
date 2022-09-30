@@ -19,7 +19,7 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 	for key, inputFile := range inputFileMap {
 		in, err := os.Open(inputFile)
 		if err != nil {
-			srv.Logger.Fatal("could not read inputfile for %v", err)
+			srv.Logger.Fatal("could not read inputfile: " + err.Error())
 		}
 		defer in.Close()
 
@@ -27,7 +27,7 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 		case constants.CategoryFonds:
 			positions := []input.InputFondsPosition{}
 			if err := gocsv.UnmarshalFile(in, &positions); err != nil {
-				srv.Logger.Fatal("could not unmarshal inputfile for crypto: %v", err)
+				srv.Logger.Fatal("could not unmarshal inputfile for crypto: ", err)
 			}
 			for _, pos := range positions {
 				ret = append(ret, structs.Position{
@@ -51,7 +51,7 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 		case constants.CategoryIndex:
 			positions := []input.InputIndexPosition{}
 			if err := gocsv.UnmarshalFile(in, &positions); err != nil {
-				srv.Logger.Fatal("could not unmarshal inputfile for crypto: %v", err)
+				srv.Logger.Fatal("could not unmarshal inputfile for crypto: ", err)
 			}
 			for _, pos := range positions {
 				ret = append(ret, structs.Position{
@@ -75,7 +75,7 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 		case constants.CategoryCrypto:
 			positions := []input.InputCryptoPosition{}
 			if err := gocsv.UnmarshalFile(in, &positions); err != nil {
-				srv.Logger.Fatal("could not unmarshal inputfile for crypto: %v", err)
+				srv.Logger.Fatal("could not unmarshal inputfile for crypto: ", err)
 			}
 			for _, pos := range positions {
 				ret = append(ret, structs.Position{
@@ -99,7 +99,7 @@ func (srv StockwatcherService) InitListPositionsFromInput(inputFileMap map[strin
 		case constants.CategoryStock:
 			positions := []input.InputStockPosition{}
 			if err := gocsv.UnmarshalFile(in, &positions); err != nil {
-				srv.Logger.Fatal("could not unmarshal inputfile for stocks: %v", err)
+				srv.Logger.Fatal("could not unmarshal inputfile for stocks: ", err)
 			}
 			for _, pos := range positions {
 				ret = append(ret, structs.Position{
